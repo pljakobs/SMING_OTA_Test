@@ -7,7 +7,7 @@ CONFIG_VARS := RBOOT_TWO_ROMS
 RBOOT_TWO_ROMS := 0
 
 COM_PORT=/dev/ttyUSB1
-COM_SPEED=480600
+COM_SPEED=460800
 
 # download urls, set appropriately
 CONFIG_VARS += ROM_0_URL \
