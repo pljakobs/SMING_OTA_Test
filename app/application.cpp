@@ -7,7 +7,7 @@
 // If you want, you can define WiFi settings globally in Eclipse Environment Variables
 #ifndef WIFI_SSID
 #define WIFI_SSID "IoT" // Put your SSID and password here
-#define WIFI_PWD "meinwlangehoertmir"
+#define WIFI_PWD ""
 #endif
 
 std::unique_ptr<Ota::Network::HttpUpgrader> otaUpdater;
@@ -235,51 +235,6 @@ void init()
 
 	osMessageInterceptor.begin(onOsMessage);
 
-	Serial << _F("conecting to wifi") << endl;
-	if(!WifiStation.config(WIFI_SSID, WIFI_PWD)){
-		Serial << _F("config failed") << endl;
-		return;
-	};
-	WifiStation.enable(true);
-	WifiStation.connect();
-
-	delay(2000);
-
-		int i=9;
-	int j=4;
-	while(WifiStation.getConnectionStatus()!=eSCS_GotIP){
-		Serial << _F(".");
-		if (i--==0){
-			switch(WifiStation.getConnectionStatus()){
-				case eSCS_Idle:
-					Serial << _F("Idle") << endl;
-					break;
-				case eSCS_Connecting:
-					Serial << _F("Connecting") << endl;
-					break;
-				case eSCS_WrongPassword:
-					Serial << _F("WrongPassword") << endl;
-					break;
-				case eSCS_AccessPointNotFound:
-					Serial << _F("NoAPFound") << endl;
-					break;
-				case eSCS_ConnectionFailed:
-					Serial << _F("ConnectionFailed") << endl;
-					break;
-				case eSCS_GotIP:
-					Serial << _F("GotIP") << endl;
-					break;
-				default:
-					Serial << _F("Unknown") << endl;
-					break;
-			}
-			Serial << WifiStation.getIP() << endl;
-			i=9;
-			if(j--==0){break;}
-		}
-		delay(1000);
-	}
-
 	
 	// mount spiffs
 	auto partition = ota.getRunningPartition();
@@ -293,23 +248,9 @@ void init()
 	//WifiAccessPoint.enable(false);
 	// connect to wifi
 	
-	/*
-	Serial << _F("conecting to wifi") << endl;
-	WifiStation.config(WIFI_SSID, WIFI_PWD);
-	WifiStation.enable(true);
-	*/
-	showInfo();
-
-
-	Serial << "ip: " << WifiStation.getIP() << ", mac: " << WifiStation.getMacAddress() << endl;
-
+	
 	Serial << _F("\r\nCurrently running ") << partition.name() << " @ 0x" << String(partition.address(), HEX) << '.'
 		   << endl;
-	showInfo();
-
-	delay(5000);
-
-	//doUpgrade();
 	
 	Serial << _F("Type 'help' and press enter for instructions.") << endl << endl;
 
