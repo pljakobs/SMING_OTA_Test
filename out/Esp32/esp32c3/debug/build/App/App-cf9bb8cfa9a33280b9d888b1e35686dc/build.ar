@@ -1,0 +1,4 @@
+CREATE clib-App-cf9bb8cfa9a33280b9d888b1e35686dc.a
+ADDMOD app/application.o
+SAVE
+END
